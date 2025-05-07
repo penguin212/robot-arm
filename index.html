@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Soldering Assistant Arm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .content-section {
+            background-color: #ffffff; /* White background for content sections */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+        .content-section h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1rem; /* mb-4 */
+            color: #1f2937; /* text-gray-800 */
+            border-bottom: 2px solid #e5e7eb; /* border-gray-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        .content-section h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            margin-top: 1.5rem; /* mt-6 */
+            margin-bottom: 0.75rem; /* mb-3 */
+            color: #374151; /* text-gray-700 */
+        }
+        .content-section p, .content-section ul {
+            font-size: 1rem; /* text-base */
+            line-height: 1.6; /* leading-relaxed */
+            color: #4b5563; /* text-gray-600 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .content-section ul {
+            list-style-type: disc;
+            padding-left: 1.5rem; /* pl-6 */
+        }
+        .content-section code {
+            background-color: #e5e7eb; /* bg-gray-200 */
+            padding: 0.25rem 0.5rem; /* px-2 py-1 */
+            border-radius: 0.25rem; /* rounded */
+            font-family: monospace;
+            color: #1f2937; /* text-gray-800 */
+        }
+        .code-block {
+            background-color: #1f2937; /* bg-gray-800 */
+            color: #d1d5db; /* text-gray-300 */
+            padding: 1rem; /* p-4 */
+            border-radius: 0.375rem; /* rounded-md */
+            overflow-x: auto;
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .code-block pre {
+            margin: 0;
+        }
+        .image-placeholder {
+            background-color: #e5e7eb; /* bg-gray-200 */
+            border: 2px dashed #9ca3af; /* border-gray-400 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px; /* Adjust as needed */
+            text-align: center;
+            color: #6b7280; /* text-gray-500 */
+            border-radius: 0.375rem; /* rounded-md */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .button {
+            background-color: #3b82f6; /* bg-blue-500 */
+            color: white;
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.375rem; /* rounded-md */
+            text-decoration: none;
+            font-weight: 500; /* font-medium */
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #2563eb; /* hover:bg-blue-600 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <header class="bg-blue-600 text-white p-6 shadow-lg rounded-b-lg">
+        <div class="container mx-auto">
+            <h1 class="text-4xl font-bold">Robotic Soldering Assistant Arm</h1>
+            <p class="mt-2 text-lg">A "third hand" for precise PCB soldering and manipulation.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+
+        <section class="content-section">
+            <h2>Introduction</h2>
+            <p>Soldering components onto a Printed Circuit Board (PCB) can be a tricky task, often feeling like you need an extra pair of hands. One hand holds the soldering iron, another the solder, and somehow you still need to keep the PCB steady and correctly positioned. This project introduces a robotic arm designed to be that much-needed "third hand." It securely grips a PCB, allowing for easy manipulation and stable positioning, ultimately making the soldering process more efficient and precise. The arm features different operational modes for movement and the ability to save and recall specific positions, enhancing its versatility.</p>
+            <div class="image-placeholder">
+                <p>Image: Overview of the Robotic Soldering Assistant Arm in action.<br>(Placeholder: You can use an image similar to Page 5 or 9 of your PDF)</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>The Problem: The "Not Enough Hands" Dilemma</h2>
+            <p>The core challenge in manual soldering is managing multiple tools and the workpiece simultaneously:</p>
+            <ul>
+                <li>Holding the soldering iron.</li>
+                <li>Feeding the solder wire.</li>
+                <li>Keeping the PCB stable and at the correct angle.</li>
+            </ul>
+            <p>This juggling act often leads to frustration, slower work, and potentially lower quality solder joints. While simple holding tools like flexible metal arms exist, they can have drawbacks:</p>
+            <ul>
+                <li>Uniform grip pressure might damage delicate components or the PCB itself.</li>
+                <li>They may not be strong enough to resist movement during soldering.</li>
+                <li>Maneuvering them into the perfect position can be cumbersome.</li>
+            </ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="image-placeholder">
+                    <p>Image: Illustration of the soldering challenge.<br>(Placeholder: Image from Page 2 of your PDF)</p>
+                </div>
+                <div class="image-placeholder">
+                    <p>Image: Example of existing "bendy arm" solutions.<br>(Placeholder: Image from Page 3 or 4 of your PDF)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>The Solution: A Smart Robotic Helping Hand</h2>
+            <p>This project tackles the "not enough hands" problem by employing a robotic arm to securely hold and position the PCB. This provides a stable and maneuverable platform for soldering tasks.</p>
+            <h3>Key Features:</h3>
+            <ul>
+                <li>
+                    <strong>Dual Operational Modes:</strong>
+                    <ul>
+                        <li><strong>Mode 1 (Power Steering/Assisted Movement):</strong> Enables smooth, servo-assisted movement of the arm, allowing for quick and intuitive repositioning of the PCB.</li>
+                        <li><strong>Mode 2 (Stationary):</strong> Locks the arm firmly in place, providing a stable platform that resists external forces during the soldering process.</li>
+                        <li>The user can easily toggle between these modes using keyboard commands.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Programmable Setpoints (Saved Positions):</strong>
+                    <ul>
+                        <li>Users can save specific arm orientations (positions of all servos).</li>
+                        <li>These saved positions can be instantly recalled, facilitating quick transitions between preferred working angles or when moving between different sections of a PCB.</li>
+                        <li>Saved orientations are stored persistently and can be loaded across different sessions.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Adjustable Grip:</strong> The arm's claw can be opened and closed via keyboard command to securely hold various sizes of PCBs.
+                </li>
+            </ul>
+            <div class="image-placeholder">
+                 <p>Image: The robotic arm holding a PCB, showcasing its utility.<br>(Placeholder: Image from Page 9 of your PDF)</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>How It Works</h2>
+            <p>The robotic arm is driven by a Python application that interfaces with its servo motors. The system is designed to interpret user commands for movement, mode switching, and position management.</p>
+            <h3>Servo Control:</h3>
+            <p>The arm utilizes multiple servo motors to achieve its range of motion and gripping action. The <code>xarm</code> Python library is employed for low-level control of these servos. The main script, <code>arm_controller.py</code>, is responsible for initializing the arm and managing servo communications.</p>
+
+            <h3>State Management:</h3>
+            <p>The <code>ArmState.py</code> script defines a class that represents the collective state of the arm, essentially a snapshot of all servo positions. The <code>Arm.py</code> script leverages this class to get and set the arm's configuration, ensuring coordinated movements.</p>
+
+            <h3>User Input:</h3>
+            <p>User interaction is handled via keyboard input, facilitated by the <code>pynput</code> library within <code>arm_controller.py</code>. This allows the user to:</p>
+            <ul>
+                <li>Toggle the claw open or closed (<code>Space</code> bar).</li>
+                <li>Manually input target positions for individual servos.</li>
+                <li>Save the current arm position to a setpoint or move to a previously saved setpoint using dedicated key commands.</li>
+                <li>Switch between "Assisted Movement" and "Stationary" modes (<code>a</code> key).</li>
+                <li>Turn off power to the servos (<code>Tab</code> key).</li>
+            </ul>
+            <div class="image-placeholder">
+                <p>Image: Diagram or photo of the keypad/keyboard input concept for setpoints.<br>(Placeholder: Image from Page 10 of your PDF)</p>
+            </div>
+
+            <h3>Position Averaging and Velocity (Assisted Mode):</h3>
+            <p>The <code>Arm.py</code> script incorporates logic to smooth out arm movements, particularly in the "Assisted Movement" mode. It appears to calculate velocities based on recent positions to predict and guide the arm's path, providing a more fluid user experience.</p>
+
+            <h3>Saving/Loading States:</h3>
+            <p>A key feature is the ability to save and load arm configurations. The <code>Arm.py</code> script uses Python's <code>pickle</code> library to serialize <code>ArmState</code> objects to a file (<code>saved_states.pkl</code>). This allows users to preserve preferred positions between uses.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Components</h2>
+            <p>Based on the provided project details, the core components include:</p>
+            <ul>
+                <li><strong>Multi-Servo Robotic Arm:</strong> Likely an xArm model or a similar articulated arm with at least 6 degrees of freedom (for versatile positioning and a gripper).</li>
+                <li><strong>Control Unit:</strong> A computer (e.g., Raspberry Pi, laptop) capable of running Python scripts and connecting to the arm, typically via USB.</li>
+                <li><strong>Power Supply:</strong> Adequate power supply for the robotic arm and its servos.</li>
+                <li><strong>Software & Libraries:</strong>
+                    <ul>
+                        <li>Python 3</li>
+                        <li><code>xarm</code> library (for arm control)</li>
+                        <li><code>pynput</code> library (for keyboard input)</li>
+                        <li><code>pickle</code> library (for saving/loading states, part of standard Python)</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Code Overview</h2>
+            <p>The project's functionality is primarily driven by three Python scripts. Below is a brief overview. You can include the full code in collapsible sections or link to a repository like GitHub.</p>
+
+            <h3>1. <code>arm_controller.py</code> (Main Script)</h3>
+            <p>This is the entry point for controlling the arm.</p>
+            <ul>
+                <li>Initializes the <code>Arm</code> object and servo interfaces.</li>
+                <li>Defines default arm poses and claw states (open/closed).</li>
+                <li>Sets up a keyboard listener (using <code>pynput</code>) to capture user commands.</li>
+                <li>Contains the main loop that keeps the script running and the arm responsive to input.</li>
+                <li>Includes functions like <code>parseStateCommand</code> to interpret and execute user inputs for servo movements and state changes.</li>
+            </ul>
+            <details class="mb-4 rounded-lg bg-gray-50 p-4">
+                <summary class="font-semibold cursor-pointer text-blue-600 hover:text-blue-700">Show/Hide arm_controller.py Snippet</summary>
+                <div class="code-block mt-2">
+<pre><code class="language-python">
+# arm_controller.py (Snippet)
+import xarm
+from Arm import Arm
+from ArmState import ArmState
+from pynput.keyboard import Key, Listener
+import sys
+import time
+import pickle
+
+# Initialize arm
+arm = Arm()
+
+# Define default poses and claw states
+default_pose = [715, 500, 500, 500, 500, 500] # Example
+default_state = ArmState(default_pose)
+open_claw_state = ArmState([150, None, None, None, None, None]) # Servo 1 open
+closed_claw_state = ArmState([715, None, None, None, None, None]) # Servo 1 closed
+
+arm.set_state(default_state)
+is_claw_closed = True
+
+def toggle_claw():
+    global is_claw_closed
+    is_claw_closed = not is_claw_closed
+    arm.set_state(closed_claw_state if is_claw_closed else open_claw_state)
+
+input_buffer = []
+
+def parse_command(command_str):
+    # Simplified command parsing logic
+    try:
+        parts = command_str.split('.')
+        if len(parts) == 2 and len(parts[0]) == 1:
+            servo_idx = int(parts[0]) - 1
+            position = int(parts[1])
+            target_state_values = [None] * 6
+            target_state_values[servo_idx] = position
+            arm.set_state(ArmState(target_state_values))
+            print(f"Set servo {servo_idx+1} to {position}")
+        else:
+            print("Invalid command format. Use 'S.PPP' (Servo.Position)")
+    except ValueError:
+        print("Invalid number in command.")
+    except Exception as e:
+        print(f"Error parsing command: {e}")
+
+
+def on_key_press(key):
+    global input_buffer
+    try:
+        if key == Key.space:
+            toggle_claw()
+            print(f"Claw {'Closed' if is_claw_closed else 'Open'}")
+        elif key == Key.backspace:
+            if input_buffer:
+                input_buffer.pop()
+            sys.stdout.write("\\033[K") # Clear line
+            print(''.join(input_buffer), end="\\r", flush=True)
+        elif key == Key.enter:
+            sys.stdout.write("\\033[K") # Clear line
+            command_str = ''.join(input_buffer)
+            print(f"Executing: {command_str}")
+            parse_command(command_str)
+            input_buffer = []
+        elif key == Key.tab:
+            print("Turning off servos.")
+            arm.off()
+        elif hasattr(key, 'char') and key.char == 'a':
+            assist_enabled = arm.set_assist() # Toggles and returns new state
+            print(f"Assist Mode: {'ON' if assist_enabled else 'OFF'}")
+        elif hasattr(key, 'char') and key.char is not None: # Regular character
+            input_buffer.append(key.char)
+            sys.stdout.write("\\033[K") # Clear line
+            print(''.join(input_buffer), end="\\r", flush=True)
+
+    except Exception as e:
+        print(f"Error in on_key_press: {e}")
+
+
+# Start listening to keyboard
+print("Robotic Arm Controller Active.")
+print("Controls: [Space]=Toggle Claw, [a]=Toggle Assist, [Tab]=Servos Off")
+print("Enter servo command (e.g., 1.500 then Enter) to set servo 1 to position 500.")
+print("Press Ctrl+C in terminal to exit.")
+
+with Listener(on_press=on_key_press) as listener:
+    try:
+        arm.run_assist_loop() # If your Arm class has a continuous loop for assist
+        # Or, if run_assist_loop is blocking or not the main logic:
+        # listener.join() # Keep listener running
+    except KeyboardInterrupt:
+        print("\\nExiting controller...")
+        arm.off()
+        listener.stop()
+        sys.exit(0)
+
+# Note: The actual arm.run_assist_loop() would need to be implemented
+# in your Arm class to continuously update in assist mode without blocking
+# the main thread if other commands are to be processed.
+# A common pattern is to run the assist logic in a separate thread.
+</code></pre>
+                </div>
+            </details>
+
+            <h3>2. <code>Arm.py</code> (Arm Logic Class)</h3>
+            <p>This script defines the <code>Arm</code> class, which encapsulates the core logic for arm control.</p>
+            <ul>
+                <li>Manages the connection to the xArm controller.</li>
+                <li>Implements methods to get the current arm state (<code>get_state</code>) and set a new arm state (<code>set_state</code>).</li>
+                <li>Contains the logic for the "assisted movement" mode, potentially calculating velocities and smoothing transitions.</li>
+                <li>Handles the saving (<code>addSaveState</code>, <code>save_states_to_file</code>) and loading (<code>load_states_from_file</code>) of arm positions using <code>pickle</code>.</li>
+                <li>Defines servo movement boundaries to prevent physical damage to the arm.</li>
+            </ul>
+             <details class="mb-4 rounded-lg bg-gray-50 p-4">
+                <summary class="font-semibold cursor-pointer text-blue-600 hover:text-blue-700">Show/Hide Arm.py Snippet</summary>
+                <div class="code-block mt-2">
+<pre><code class="language-python">
+# Arm.py (Conceptual Snippet - adapt from your actual file)
+import xarm
+from ArmState import ArmState
+import pickle
+import os
+import time # For assist loop timing
+
+# Servo bounds (example, adjust to your arm's specifics)
+# [[s1_min, s1_max], [s2_min, s2_max], ..., [s6_min, s6_max]]
+SERVO_BOUNDS = [
+    [150, 718],  # Servo 1 (Claw)
+    [0, 1000],   # Servo 2
+    [0, 1000],   # Servo 3
+    [0, 1000],   # Servo 4
+    [116, 895],  # Servo 5
+    [0, 1000]    # Servo 6
+]
+
+SAVE_FILE = 'saved_states.pkl'
+
+class Arm:
+    def __init__(self, port='USB'):
+        try:
+            self.controller = xarm.Controller(port)
+            print("xArm Controller Connected.")
+            # Initialize servos (ensure they are recognized by controller)
+            self.servos = [xarm.Servo(i+1) for i in range(6)]
+            print(f"{len(self.servos)} servos initialized.")
+        except Exception as e:
+            print(f"Error initializing xArm controller: {e}")
+            self.controller = None
+            self.servos = []
+
+        self.assist_mode = False
+        self.current_positions = self._read_current_positions() # Read initial positions
+        self.target_positions = list(self.current_positions) # Target starts as current
+        
+        # For assist mode smoothing
+        self.position_history = [list(self.current_positions) for _ in range(4)] # Store last few positions
+        self.velocities = [0] * 6
+
+        self.saved_states = {}
+        self._load_states_from_file()
+
+    def _read_current_positions(self):
+        if not self.controller: return [0]*6
+        # This is a conceptual way; xarm library might have a bulk read
+        # If not, read one by one. Ensure this doesn't return None if servo is off.
+        # For xarm, you might need to query positions if they are not actively set/tracked
+        # For now, let's assume a starting default or a safe read.
+        # If servos are off, reading might fail or return last known.
+        # Placeholder:
+        return [self.servos[i].get_position_r() if self.servos[i] else 0 for i in range(6)]
+
+
+    def get_state(self):
+        # Update current_positions before returning state
+        self.current_positions = self._read_current_positions()
+        return ArmState(list(self.current_positions))
+
+    def set_state(self, arm_state: ArmState, move_time_ms=500):
+        if not self.controller: return
+        new_positions = arm_state.get_positions()
+        for i in range(len(self.servos)):
+            if new_positions[i] is not None:
+                # Clamp position to bounds
+                clamped_pos = max(SERVO_BOUNDS[i][0], min(new_positions[i], SERVO_BOUNDS[i][1]))
+                self.target_positions[i] = clamped_pos # Update target
+                try:
+                    # xarm.ServoSet(servo_id, angle, speed=0, wait=False)
+                    # xarm.ServoSet(servo_id, angle, time=move_time_ms, wait=False)
+                    self.controller.setPosition(i + 1, clamped_pos, duration=move_time_ms, wait=False)
+                    # self.servos[i].setPosition(clamped_pos, duration=move_time_ms, wait=False) # Check xarm docs for correct method
+                except Exception as e:
+                    print(f"Error setting servo {i+1} to {clamped_pos}: {e}")
+        # After setting, update current_positions (or rely on a read loop)
+        # For simplicity, assume positions are set. A real system might need feedback.
+        for i in range(len(new_positions)):
+            if new_positions[i] is not None:
+                 self.current_positions[i] = self.target_positions[i]
+
+
+    def set_assist(self):
+        self.assist_mode = not self.assist_mode
+        if self.assist_mode:
+            print("Assist mode ON. Arm will try to follow gentle pushes.")
+            # When turning on assist, capture current physical positions
+            self.target_positions = self._read_current_positions_for_assist()
+            self.current_positions = list(self.target_positions)
+            self.velocities = [0] * 6
+            self.position_history = [list(self.current_positions) for _ in range(len(self.position_history))]
+        else:
+            print("Assist mode OFF. Arm will hold position (or go to target if one was set).")
+            # Optionally, make servos hold current physical position firmly
+            # self.set_state(ArmState(self._read_current_positions()), move_time_ms=100) # Hold current
+        return self.assist_mode
+
+    def _read_current_positions_for_assist(self):
+        """Reads servo positions assuming they are powered but not actively driven by setPosition."""
+        if not self.controller: return [0]*6
+        # For xArm, if servos are "unlocked" or in a compliant mode, this would read their physical angle.
+        # If they are always "locked", this reads the last commanded position.
+        # This is crucial for assist mode to work correctly.
+        # Placeholder:
+        # return [self.servos[i].get_physical_angle() for i in range(6)] # Ideal
+        return [self.controller.getPosition(i+1) for i in range(6)] # Fallback to last commanded
+
+    def run_assist_loop_step(self):
+        """Called periodically if assist mode is on."""
+        if not self.assist_mode or not self.controller:
+            return
+
+        # 1. Read current physical positions of the arm
+        # This is the most critical part for a good assist mode.
+        # The servos need to be in a state where they can be moved by hand,
+        # and we can read that new position.
+        physical_positions = self._read_current_positions_for_assist()
+
+        # 2. Update position history and calculate velocities
+        self.position_history.pop(0)
+        self.position_history.append(list(physical_positions))
+
+        for i in range(6):
+            # Simple velocity: difference between current and oldest in history
+            # Adjust time_delta based on how often this loop runs
+            time_delta = 0.1 * len(self.position_history) # Assuming loop runs roughly every 100ms
+            self.velocities[i] = (self.position_history[-1][i] - self.position_history[0][i]) / time_delta
+            # Basic smoothing/damping for velocity could be added here
+        
+        # 3. Calculate new target positions based on velocity (projection)
+        # This is where the "assistance" happens. We project where the arm is going.
+        assist_factor = 15 # How much to "lead" the movement. Tune this.
+        
+        new_assisted_targets = [0]*6
+        for i in range(6):
+            # Don't assist claw usually
+            if i == 0: # Assuming servo 1 is claw
+                 new_assisted_targets[i] = physical_positions[i] # Claw just follows physical
+                 continue
+
+            projected_pos = physical_positions[i] + self.velocities[i] * assist_factor * 0.02 # 0.02 is approx loop interval
+            
+            # Clamp to bounds
+            new_assisted_targets[i] = max(SERVO_BOUNDS[i][0], min(projected_pos, SERVO_BOUNDS[i][1]))
+
+            # If velocity is very low, tend to hold current physical position
+            if abs(self.velocities[i]) < 5: # Threshold, tune this
+                new_assisted_targets[i] = physical_positions[i]
+
+
+        # 4. Command the servos to the new assisted target positions
+        # Use a short move time for responsiveness
+        temp_state = ArmState(new_assisted_targets)
+        # Critical: use a very short move_time_ms or speed for assist to feel responsive
+        self.set_state(temp_state, move_time_ms=50) # 50ms is quick
+
+        # Update internal current_positions to reflect the new target
+        self.current_positions = new_assisted_targets
+
+
+    def add_save_state(self, key_char: str, state_to_save: ArmState = None):
+        if state_to_save is None:
+            state_to_save = self.get_state() # Save current actual positions
+        
+        # Don't save claw position in setpoints, usually controlled independently
+        cloned_positions = list(state_to_save.get_positions())
+        cloned_positions[0] = None # Servo 1 (claw) position not part of saved orientation
+
+        self.saved_states[key_char] = ArmState(cloned_positions)
+        print(f"State saved for key '{key_char}'.")
+        self._save_states_to_file()
+
+    def go_to_saved_state(self, key_char: str):
+        if key_char in self.saved_states:
+            print(f"Moving to saved state '{key_char}'.")
+            self.set_state(self.saved_states[key_char], move_time_ms=1000) # Slower move for setpoints
+        else:
+            print(f"No saved state for key '{key_char}'.")
+
+    def _save_states_to_file(self):
+        try:
+            with open(SAVE_FILE, 'wb') as f:
+                pickle.dump(self.saved_states, f)
+            print(f"Saved states to {SAVE_FILE}")
+        except Exception as e:
+            print(f"Error saving states: {e}")
+
+    def _load_states_from_file(self):
+        if os.path.exists(SAVE_FILE):
+            try:
+                with open(SAVE_FILE, 'rb') as f:
+                    self.saved_states = pickle.load(f)
+                print(f"Loaded {len(self.saved_states)} saved states from {SAVE_FILE}.")
+            except Exception as e:
+                print(f"Error loading states: {e}. Starting with empty set.")
+                self.saved_states = {}
+        else:
+            print("No save file found. Starting with empty set of saved states.")
+            self.saved_states = {}
+            
+    def off(self):
+        if not self.controller: return
+        print("Turning off all servos.")
+        # The xarm library might have a specific command to release/power off servos
+        # For example, setting torque to 0 or a specific "disable" command.
+        # self.controller.setServoTorque(False) # Hypothetical
+        # Or set all servos to a "neutral" or "relaxed" if applicable
+        # For now, we'll just stop sending commands. If they hold position, they hold.
+        # If your controller has an explicit "release all servos" command, use it here.
+        # e.g. self.controller.disconnect() or self.controller.close() might also power them down.
+        # Check xarm documentation for the correct way to make servos compliant/off.
+        # A common way is to set their speed to 0 and torque to 0 if available.
+        for i in range(len(self.servos)):
+            try:
+                # This command might not exist or work as expected for "off"
+                # self.controller.setPosition(i + 1, self.controller.getPosition(i+1), duration=0, wait=False) # Try to hold
+                # More likely, you'd use a specific "release" or "torque off" command if available.
+                # If xarm.Servo objects have a .disable() or .torque(0) method:
+                # self.servos[i].disable()
+                pass # Placeholder - consult xArm docs for "power off" or "release"
+            except Exception as e:
+                print(f"Error trying to turn off servo {i+1}: {e}")
+        # self.controller.disconnect() # This might be too final if you want to reuse.
+
+    # Example of how assist loop might be run if not in a separate thread in controller
+    def continuous_assist_update(self):
+        """ Call this in a loop from arm_controller if assist is on """
+        if self.assist_mode:
+            self.run_assist_loop_step()
+            time.sleep(0.02) # Loop interval for assist, e.g., 50Hz
+```</pre>
+                </div>
+            </details>
+
+            <h3>3. <code>ArmState.py</code> (Data Structure)</h3>
+            <p>A straightforward class that acts as a data container for the arm's servo positions.</p>
+            <ul>
+                <li>Holds a list representing the positions of each servo.</li>
+                <li>Provides methods to get and potentially set these positions (though setting is often managed by the <code>Arm</code> class).</li>
+            </ul>
+            <details class="mb-4 rounded-lg bg-gray-50 p-4">
+                <summary class="font-semibold cursor-pointer text-blue-600 hover:text-blue-700">Show/Hide ArmState.py Snippet</summary>
+                <div class="code-block mt-2">
+<pre><code class="language-python">
+# ArmState.py
+# No import of 'Arm' needed here to prevent circular dependency
+# if ArmState is just a data structure.
+
+class ArmState:
+    def __init__(self, positions=None):
+        """
+        Initializes the ArmState.
+        :param positions: A list of 6 servo positions.
+                          None in a position means it's not specified/to be ignored.
+        """
+        if positions is None:
+            self.positions = [None] * 6  # Default to 6 servos, all unspecified
+        elif len(positions) != 6:
+            # Handle case where input list isn't the expected length,
+            # perhaps by padding with None or raising an error.
+            # For simplicity, we'll assume it's always 6 or pad/truncate.
+            temp_positions = [None] * 6
+            for i in range(min(len(positions), 6)):
+                temp_positions[i] = positions[i]
+            self.positions = temp_positions
+            # print(f"Warning: ArmState initialized with {len(positions)} values, expected 6.")
+        else:
+            self.positions = list(positions) # Ensure it's a mutable copy
+
+    def get_positions(self):
+        """Returns the list of servo positions."""
+        return self.positions
+
+    def set_servo_position(self, servo_index, position):
+        """
+        Sets the position for a specific servo.
+        :param servo_index: 0-based index of the servo.
+        :param position: The position value.
+        """
+        if 0 <= servo_index < len(self.positions):
+            self.positions[servo_index] = position
+        else:
+            print(f"Error: Servo index {servo_index} out of bounds.")
+
+    def __str__(self):
+        return f"ArmState({self.positions})"
+
+</code></pre>
+                </div>
+            </details>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenges Encountered</h2>
+            <ul>
+                <li><strong>Random System Crashes:</strong> The project initially suffered from random crashes, suspected to be caused by power brown-outs when servos drew too much current. This was reportedly mitigated by operating the servos at slower speeds.</li>
+                <li><strong>Maintaining Stationary Position:</strong> Achieving perfect stillness in the arm was difficult. Factors like gravity constantly pulling on the arm segments and the inherent nature of servos (which may not be designed to stall under load for extended periods without overheating or jittering) contributed to this challenge.</li>
+                <li><strong>Assisted Mode Implementation:</strong> Getting the "power steering" or assisted movement mode to feel natural and responsive can be complex, often requiring careful tuning of sensor readings (if any), motor control parameters, and potentially different control libraries or approaches.</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Next Steps & Future Improvements</h2>
+            <ul>
+                <li><strong>Refine Assisted Movement Mode:</strong> Further development of the assisted movement mode for smoother and more intuitive control. This might involve exploring alternative libraries, control algorithms (e.g., admittance control if force/torque sensing is available or can be estimated), or more sophisticated sensor fusion.</li>
+                <li><strong>Develop a Graphical User Interface (GUI):</strong> Transition from keyboard commands to a more user-friendly GUI. This could be a desktop application or a web interface, providing visual feedback of the arm's position and easier control over its functions.</li>
+                <li><strong>Enhanced Stability for Stationary Mode:</strong> Investigate methods to improve the arm's stability when in stationary mode, such as mechanical brakes (if the arm supports them) or more advanced control loops that can better counteract drift and external forces.</li>
+                <li><strong>Error Handling and Robustness:</strong> Implement more comprehensive error handling in the software to gracefully manage unexpected situations, such as communication loss with the arm or invalid user inputs.</li>
+                <li><strong>Safety Features:</strong> Incorporate safety features, like software-defined movement limits, emergency stop functionality, and possibly collision detection if feasible, to protect the arm and the workpiece.</li>
+                <li><strong>Integration with Soldering Tools:</strong> Explore possibilities for closer integration with soldering equipment, such as a mount for a fume extractor or a system to automatically present solder. (Ambitious)</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Conclusion</h2>
+            <p>The Robotic Soldering Assistant Arm project successfully demonstrates a viable solution to the common problem of needing an extra hand during PCB soldering. By providing stable holding, programmable positions, and an assisted movement mode, it significantly enhances the soldering workflow. While some challenges were encountered, the project lays a solid foundation for a very useful tool, with clear paths for future enhancements and refinements.</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-6 mt-8 bg-gray-800 text-gray-300 rounded-t-lg">
+        <p>Project by Dylan Huber (Adapted for Web by AI)</p>
+        <p>Inspired by the need for a "third hand" in electronics work.</p>
+    </footer>
+
+</body>
+</html>
