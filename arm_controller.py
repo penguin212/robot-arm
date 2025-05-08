@@ -4,7 +4,6 @@ from ArmState import ArmState
 from pynput.keyboard import Key, Listener
 import sys
 import time
-import pickle
 
 
 arm = Arm()
